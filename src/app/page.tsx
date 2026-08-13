@@ -322,7 +322,15 @@ export default function Home() {
           q: 回復薬 ・ m: 効果音 ON/OFF ・ r: 新しいシードで再挑戦 — B5 の暁の勾玉 * を取れば勝利
         </div>
         <div style={{ marginTop: 6, opacity: 0.8 }}>
-          MIT License © 2026 坂田哲朗 ・{" "}
+          <a
+            href="https://github.com/twill3c/meikyu-rogue/blob/main/LICENSE"
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: "inherit" }}
+          >
+            MIT License
+          </a>{" "}
+          © 2026 坂田哲朗 ・{" "}
           <a
             href="https://github.com/twill3c/meikyu-rogue"
             target="_blank"
