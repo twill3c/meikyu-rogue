@@ -9,3 +9,6 @@
 {"v": "1.2", "ts": "2026-08-13T09:27:25+09:00", "project": "meikyu-rogue", "loop_id": "loop_004", "event": "test_run", "data": {"command": "npm run verify", "passed": 70, "failed": 0}}
 {"v": "1.2", "ts": "2026-08-13T09:27:26+09:00", "project": "meikyu-rogue", "loop_id": "loop_004", "event": "stage_end", "data": {"stage": 5, "stage_name": "検証", "result": "pass", "notes": "verify(build込み)green + Chrome headless でスコア表示を実画面確認"}}
 {"v": "1.2", "ts": "2026-08-13T09:27:26+09:00", "project": "meikyu-rogue", "loop_id": "loop_004", "event": "stage_end", "data": {"stage": 6, "stage_name": "文書同期", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T09:27:39+09:00", "project": "meikyu-rogue", "loop_id": "loop_004", "event": "commit", "data": {"sha": "2d502fd", "kind": "feat"}}
+{"v": "1.2", "ts": "2026-08-13T09:27:40+09:00", "project": "meikyu-rogue", "loop_id": "loop_004", "event": "stage_end", "data": {"stage": 7, "stage_name": "完了", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T09:27:40+09:00", "project": "meikyu-rogue", "loop_id": "loop_004", "event": "loop_end", "data": {"outcome": "success", "failure_count": 0, "summary": "F-11/F-12 完了。70 テスト green、verify(build込み)PASS、実画面でスコア表示確認。失敗 0 件"}}
