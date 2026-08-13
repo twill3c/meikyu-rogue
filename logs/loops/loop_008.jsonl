@@ -5,3 +5,8 @@
 {"v": "1.2", "ts": "2026-08-13T10:14:09+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "test_run", "data": {"command": "npm run verify", "passed": 96, "failed": 0}}
 {"v": "1.2", "ts": "2026-08-13T10:14:09+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "stage_end", "data": {"stage": 4, "stage_name": "実装", "result": "pass"}}
 {"v": "1.2", "ts": "2026-08-13T10:14:10+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "commit", "data": {"sha": "d3e2a00", "kind": "spec"}}
+{"v": "1.2", "ts": "2026-08-13T10:14:31+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "commit", "data": {"sha": "5ad3251", "kind": "feat"}}
+{"v": "1.2", "ts": "2026-08-13T10:16:50+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "stage_end", "data": {"stage": 5, "stage_name": "検証", "result": "pass", "notes": "verify green(96 テスト)+ 本番再デプロイ後に実画面で『暁の勾玉』表示を確認"}}
+{"v": "1.2", "ts": "2026-08-13T10:16:50+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "stage_end", "data": {"stage": 6, "stage_name": "文書同期", "result": "pass", "notes": "SPEC/TEST_SPEC/README/コメントまで一括改名、旧名称の残存 0 件を grep 確認"}}
+{"v": "1.2", "ts": "2026-08-13T10:16:51+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "stage_end", "data": {"stage": 7, "stage_name": "完了", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T10:16:51+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "loop_end", "data": {"outcome": "success", "failure_count": 0, "summary": "秘宝名を『暁の勾玉』へ変更完了。表示文言のみ・内部名 amulet 据え置き。verify green・本番反映確認。失敗 0 件"}}
