@@ -346,7 +346,7 @@ export default function Home() {
             rel="noreferrer"
             style={{ color: "inherit" }}
           >
-            遊び方ガイド
+            迷宮ローグの歩き方
           </a>{" "}
           ・{" "}
           <a
@@ -355,7 +355,7 @@ export default function Home() {
             rel="noreferrer"
             style={{ color: "inherit" }}
           >
-            アーキテクチャ図
+            迷宮ローグ設計図
           </a>{" "}
           ・{" "}
           <a
