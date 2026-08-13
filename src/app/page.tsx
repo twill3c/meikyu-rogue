@@ -2,10 +2,12 @@
 
 // meikyu-rogue UI(F-10)— 状態は core の GameState をそのまま持ち、
 // 入力を Action に写像して step を呼ぶだけの薄いレイヤ
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { idx } from "@/core/dungeon";
 import { newGame, step } from "@/core/engine";
 import type { Action, GameState } from "@/core/engine";
+import { loadHighScores, recordHighScore } from "@/lib/highscore";
+import type { ScoreEntry } from "@/lib/highscore";
 
 const KEY_MOVES: Record<string, [number, number]> = {
   ArrowUp: [0, -1],
@@ -76,15 +78,37 @@ function renderCell(g: GameState, x: number, y: number): Cell {
 
 export default function Home() {
   const [game, setGame] = useState<GameState | null>(null);
+  const [highScores, setHighScores] = useState<ScoreEntry[]>([]);
+  const [lastRank, setLastRank] = useState<number | null>(null);
+  // 決着 1 回につき 1 記録(F-13)。リスタートでリセットする
+  const recordedRef = useRef(false);
 
   const restart = useCallback((seed?: number) => {
     // シードの採番は UI レイヤの責務(core は注入されたシードに対し決定的)
+    recordedRef.current = false;
+    setLastRank(null);
     setGame(newGame(seed ?? Math.floor(Math.random() * 1_000_000_000)));
   }, []);
 
   useEffect(() => {
+    setHighScores(loadHighScores(window.localStorage));
     restart();
   }, [restart]);
+
+  useEffect(() => {
+    if (!game || game.status === "playing" || recordedRef.current) return;
+    recordedRef.current = true;
+    const { scores, rank } = recordHighScore(window.localStorage, {
+      score: game.score,
+      depth: game.depth,
+      kills: game.kills,
+      turn: game.turn,
+      seed: game.seed,
+      ts: Date.now(),
+    });
+    setHighScores(scores);
+    setLastRank(rank);
+  }, [game]);
 
   const dispatch = useCallback((action: Action) => {
     setGame((g) => (g ? step(g, action) : g));
@@ -154,6 +178,9 @@ export default function Home() {
         <span>B{game.depth}</span>
         <span>turn {game.turn}</span>
         <span style={{ color: COLORS.stairs }}>score {game.score}</span>
+        {highScores.length > 0 && (
+          <span style={{ opacity: 0.7 }}>best {highScores[0].score}</span>
+        )}
         <span style={{ opacity: 0.6 }}>seed {game.seed}</span>
       </header>
 
@@ -219,7 +246,24 @@ export default function Home() {
             </div>
             <div style={{ fontSize: 16 }}>
               最終スコア {game.score}(撃破 {game.kills} 体 ・ B{game.depth} 到達)
+              {lastRank !== null ? ` — ハイスコア ${lastRank} 位!` : " — ランク外"}
             </div>
+            {highScores.length > 0 && (
+              <div style={{ fontSize: 13, textAlign: "left" }}>
+                <div style={{ opacity: 0.7, marginBottom: 4 }}>ハイスコア TOP5</div>
+                {highScores.slice(0, 5).map((e, i) => (
+                  <div
+                    key={`${e.ts}-${i}`}
+                    style={{
+                      color: lastRank === i + 1 ? COLORS.player : COLORS.text,
+                      fontWeight: lastRank === i + 1 ? 700 : 400,
+                    }}
+                  >
+                    {i + 1}. {e.score}点 — B{e.depth} ・ 撃破{e.kills} ・ {e.turn}ターン
+                  </div>
+                ))}
+              </div>
+            )}
             <div style={{ display: "flex", gap: 12 }}>
               <button onClick={() => restart(game.seed)} style={buttonStyle}>
                 同じシードで再挑戦
