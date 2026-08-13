@@ -317,8 +317,11 @@ export default function Home() {
       </section>
 
       <footer style={{ fontSize: 12, opacity: 0.55, maxWidth: 640, textAlign: "center" }}>
-        移動: 矢印 / hjkl / wasd(敵に向かうと攻撃) ・ 待機: .(階段上では降りる) ・
-        q: 回復薬 ・ m: 効果音 ON/OFF ・ r: 新しいシードで再挑戦 — B5 の暁の勾玉 * を取れば勝利
+        <div>
+          移動: 矢印 / hjkl / wasd(敵に向かうと攻撃) ・ 待機: .(階段上では降りる) ・
+          q: 回復薬 ・ m: 効果音 ON/OFF ・ r: 新しいシードで再挑戦 — B5 の暁の勾玉 * を取れば勝利
+        </div>
+        <div style={{ marginTop: 6, opacity: 0.8 }}>MIT License © 2026 坂田哲朗</div>
       </footer>
     </main>
   );
