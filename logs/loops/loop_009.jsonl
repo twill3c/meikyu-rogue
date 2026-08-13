@@ -4,3 +4,8 @@
 {"v": "1.2", "ts": "2026-08-13T10:19:24+09:00", "project": "meikyu-rogue", "loop_id": "loop_009", "event": "stage_end", "data": {"stage": 3, "stage_name": "テスト先行", "result": "skip", "notes": "UI 表記 1 行の追加。テスト対象の挙動変化なし"}}
 {"v": "1.2", "ts": "2026-08-13T10:20:46+09:00", "project": "meikyu-rogue", "loop_id": "loop_009", "event": "test_run", "data": {"command": "npm run verify", "passed": 96, "failed": 0}}
 {"v": "1.2", "ts": "2026-08-13T10:20:46+09:00", "project": "meikyu-rogue", "loop_id": "loop_009", "event": "stage_end", "data": {"stage": 4, "stage_name": "実装", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T10:20:47+09:00", "project": "meikyu-rogue", "loop_id": "loop_009", "event": "commit", "data": {"sha": "aa2caee", "kind": "feat"}}
+{"v": "1.2", "ts": "2026-08-13T10:23:56+09:00", "project": "meikyu-rogue", "loop_id": "loop_009", "event": "stage_end", "data": {"stage": 5, "stage_name": "検証", "result": "pass", "notes": "verify green + 本番実画面で『MIT License © 2026 坂田哲朗』の表示を確認"}}
+{"v": "1.2", "ts": "2026-08-13T10:23:56+09:00", "project": "meikyu-rogue", "loop_id": "loop_009", "event": "stage_end", "data": {"stage": 6, "stage_name": "文書同期", "result": "pass", "notes": "表記は LICENSE ファイル(MIT / 坂田哲朗)と一致。文書変更なし"}}
+{"v": "1.2", "ts": "2026-08-13T10:23:57+09:00", "project": "meikyu-rogue", "loop_id": "loop_009", "event": "stage_end", "data": {"stage": 7, "stage_name": "完了", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T10:23:57+09:00", "project": "meikyu-rogue", "loop_id": "loop_009", "event": "loop_end", "data": {"outcome": "success", "failure_count": 0, "summary": "フッタに MIT ライセンス表記を追加し本番反映。失敗 0 件"}}
