@@ -356,6 +356,15 @@ export default function Home() {
             style={{ color: "inherit" }}
           >
             アーキテクチャ図
+          </a>{" "}
+          ・{" "}
+          <a
+            href="https://app-menu-amber.vercel.app"
+            target="_blank"
+            rel="noopener"
+            style={{ color: "inherit" }}
+          >
+            App Menu
           </a>
         </div>
       </footer>
