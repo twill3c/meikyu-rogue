@@ -12,3 +12,6 @@
 {"v": "1.2", "ts": "2026-08-13T09:02:22+09:00", "project": "meikyu-rogue", "loop_id": "loop_002", "event": "test_run", "data": {"command": "npm run verify:fast", "passed": 55, "failed": 0}}
 {"v": "1.2", "ts": "2026-08-13T09:02:23+09:00", "project": "meikyu-rogue", "loop_id": "loop_002", "event": "stage_end", "data": {"stage": 5, "stage_name": "検証", "result": "pass"}}
 {"v": "1.2", "ts": "2026-08-13T09:02:23+09:00", "project": "meikyu-rogue", "loop_id": "loop_002", "event": "stage_end", "data": {"stage": 6, "stage_name": "文書同期", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T09:02:37+09:00", "project": "meikyu-rogue", "loop_id": "loop_002", "event": "commit", "data": {"sha": "2f45463", "kind": "feat"}}
+{"v": "1.2", "ts": "2026-08-13T09:02:37+09:00", "project": "meikyu-rogue", "loop_id": "loop_002", "event": "stage_end", "data": {"stage": 7, "stage_name": "完了", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T09:02:37+09:00", "project": "meikyu-rogue", "loop_id": "loop_002", "event": "loop_end", "data": {"outcome": "success", "failure_count": 2, "summary": "F-04〜F-09 完了。55 テスト green、カバレッジ 98.07/93.51、verify:fast PASS。失敗 2 件(GEN-HALLUC: Bresenham 誤転記で無限ループ→OOM / GEN-SCOPE: F-08/09 実装先行によるカバレッジ未達→テスト追補で解消)"}}
