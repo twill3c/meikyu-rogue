@@ -339,6 +339,15 @@ export default function Home() {
             style={{ color: "inherit" }}
           >
             遊び方ガイド
+          </a>{" "}
+          ・{" "}
+          <a
+            href="https://claude.ai/code/artifact/6620befa-ac12-4085-a8ec-aa4054329cfc"
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: "inherit" }}
+          >
+            アーキテクチャ図
           </a>
         </div>
       </footer>
