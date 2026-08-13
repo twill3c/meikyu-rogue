@@ -1,0 +1,10 @@
+{"v": "1.2", "ts": "2026-08-13T09:45:49+09:00", "project": "meikyu-rogue", "loop_id": "loop_006", "event": "loop_start", "data": {"goal": "F-14: Web Audio 合成の効果音(BGM なし)とサウンド設定トグル(デフォルト OFF・localStorage 永続化)を実装する", "spec_refs": ["F-14"], "scaffold_version": "1.8.0", "agent": "claude-fable-5"}}
+{"v": "1.2", "ts": "2026-08-13T09:45:49+09:00", "project": "meikyu-rogue", "loop_id": "loop_006", "event": "stage_end", "data": {"stage": 1, "stage_name": "計画", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T09:45:49+09:00", "project": "meikyu-rogue", "loop_id": "loop_006", "event": "stage_end", "data": {"stage": 2, "stage_name": "文脈読込", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T09:47:00+09:00", "project": "meikyu-rogue", "loop_id": "loop_006", "event": "commit", "data": {"sha": "aee7981", "kind": "spec"}}
+{"v": "1.2", "ts": "2026-08-13T09:47:46+09:00", "project": "meikyu-rogue", "loop_id": "loop_006", "event": "test_run", "data": {"command": "npx vitest run", "passed": 79, "failed": 1}}
+{"v": "1.2", "ts": "2026-08-13T09:47:47+09:00", "project": "meikyu-rogue", "loop_id": "loop_006", "event": "stage_end", "data": {"stage": 3, "stage_name": "テスト先行", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T09:49:44+09:00", "project": "meikyu-rogue", "loop_id": "loop_006", "event": "test_run", "data": {"command": "npm run verify", "passed": 96, "failed": 0}}
+{"v": "1.2", "ts": "2026-08-13T09:49:44+09:00", "project": "meikyu-rogue", "loop_id": "loop_006", "event": "stage_end", "data": {"stage": 4, "stage_name": "実装", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T09:52:21+09:00", "project": "meikyu-rogue", "loop_id": "loop_006", "event": "stage_end", "data": {"stage": 5, "stage_name": "検証", "result": "pass", "notes": "verify(build込み)green + Chrome headless で『音 OFF』トグルのデフォルト表示を実画面確認"}}
+{"v": "1.2", "ts": "2026-08-13T09:52:22+09:00", "project": "meikyu-rogue", "loop_id": "loop_006", "event": "stage_end", "data": {"stage": 6, "stage_name": "文書同期", "result": "pass"}}

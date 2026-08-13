@@ -8,6 +8,8 @@ import { newGame, step } from "@/core/engine";
 import type { Action, GameState } from "@/core/engine";
 import { loadHighScores, recordHighScore } from "@/lib/highscore";
 import type { ScoreEntry } from "@/lib/highscore";
+import { playSound } from "@/lib/audio";
+import { loadSoundEnabled, saveSoundEnabled, soundEventsForStep } from "@/lib/sound";
 
 const KEY_MOVES: Record<string, [number, number]> = {
   ArrowUp: [0, -1],
@@ -82,6 +84,17 @@ export default function Home() {
   const [lastRank, setLastRank] = useState<number | null>(null);
   // 決着 1 回につき 1 記録(F-13)。リスタートでリセットする
   const recordedRef = useRef(false);
+  // 効果音(F-14)— デフォルト OFF。直前 state との差分からイベントを導出して鳴らす
+  const [soundOn, setSoundOn] = useState(false);
+  const prevGameRef = useRef<GameState | null>(null);
+
+  const toggleSound = useCallback(() => {
+    setSoundOn((v) => {
+      const next = !v;
+      saveSoundEnabled(window.localStorage, next);
+      return next;
+    });
+  }, []);
 
   const restart = useCallback((seed?: number) => {
     // シードの採番は UI レイヤの責務(core は注入されたシードに対し決定的)
@@ -92,8 +105,17 @@ export default function Home() {
 
   useEffect(() => {
     setHighScores(loadHighScores(window.localStorage));
+    setSoundOn(loadSoundEnabled(window.localStorage));
     restart();
   }, [restart]);
+
+  useEffect(() => {
+    const prev = prevGameRef.current;
+    prevGameRef.current = game;
+    // turn 0 は新しいラン(リスタート・降階直後は turn>0)— 差分音を鳴らさない
+    if (!soundOn || !game || !prev || game.turn === 0) return;
+    for (const ev of soundEventsForStep(prev, game)) playSound(ev);
+  }, [game, soundOn]);
 
   useEffect(() => {
     if (!game || game.status === "playing" || recordedRef.current) return;
@@ -136,11 +158,13 @@ export default function Home() {
         dispatch({ type: "quaff" });
       } else if (ev.key === "r") {
         restart();
+      } else if (ev.key === "m") {
+        toggleSound();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [game, dispatch, restart]);
+  }, [game, dispatch, restart, toggleSound]);
 
   if (!game) {
     return (
@@ -182,6 +206,14 @@ export default function Home() {
           <span style={{ opacity: 0.7 }}>best {highScores[0].score}</span>
         )}
         <span style={{ opacity: 0.6 }}>seed {game.seed}</span>
+        <button
+          onClick={toggleSound}
+          aria-pressed={soundOn}
+          title="効果音の切り替え(m)"
+          style={{ ...buttonStyle, padding: "2px 8px", fontSize: 12, color: soundOn ? "#98c379" : "#abb2bf" }}
+        >
+          音 {soundOn ? "ON" : "OFF"}
+        </button>
       </header>
 
       <section style={{ display: "flex", gap: 16, alignItems: "center", fontSize: 14 }}>
@@ -286,7 +318,7 @@ export default function Home() {
 
       <footer style={{ fontSize: 12, opacity: 0.55, maxWidth: 640, textAlign: "center" }}>
         移動: 矢印 / hjkl / wasd(敵に向かうと攻撃) ・ 待機: .(階段上では降りる) ・
-        q: 回復薬 ・ r: 新しいシードで再挑戦 — B5 の魂珠 * を取れば勝利
+        q: 回復薬 ・ m: 効果音 ON/OFF ・ r: 新しいシードで再挑戦 — B5 の魂珠 * を取れば勝利
       </footer>
     </main>
   );
