@@ -22,7 +22,7 @@ const KEY_MOVES: Record<string, [number, number]> = {
   d: [1, 0],
 };
 
-const ENEMY_GLYPHS = { slime: "s", goblin: "g", ogre: "O" } as const;
+const ENEMY_GLYPHS = { slime: "s", bat: "b", goblin: "g", ogre: "O", wraith: "W" } as const;
 const ITEM_GLYPHS = { potion: "!", sword: "/", shield: "]", amulet: "*" } as const;
 
 const COLORS = {
@@ -153,6 +153,7 @@ export default function Home() {
         <h1 style={{ fontSize: 20, color: COLORS.player, margin: 0 }}>迷宮ローグ</h1>
         <span>B{game.depth}</span>
         <span>turn {game.turn}</span>
+        <span style={{ color: COLORS.stairs }}>score {game.score}</span>
         <span style={{ opacity: 0.6 }}>seed {game.seed}</span>
       </header>
 
@@ -215,6 +216,9 @@ export default function Home() {
           >
             <div style={{ fontSize: 24, color: game.status === "victory" ? COLORS.stairs : COLORS.enemy }}>
               {game.status === "victory" ? "魂珠を持ち帰った — 勝利!" : "力尽きた…"}
+            </div>
+            <div style={{ fontSize: 16 }}>
+              最終スコア {game.score}(撃破 {game.kills} 体 ・ B{game.depth} 到達)
             </div>
             <div style={{ display: "flex", gap: 12 }}>
               <button onClick={() => restart(game.seed)} style={buttonStyle}>

@@ -25,16 +25,20 @@ const FLOOR_RETRY_BUDGET = 20; // 階の作り直し上限(F-02)
 const SPAWN_TRY_BUDGET = 100; // 敵・アイテム配置の試行上限
 const ENEMY_MIN_DIST = 6; // 入口からの最低マンハッタン距離(初手で殴られない)
 
+// 敵種テーブルの正本は SPEC.md §2(F-11)。変更はスペック経由で行う
 const ENEMY_STATS: Record<EnemyKind, { hp: number; atk: number; def: number }> = {
   slime: { hp: 6, atk: 2, def: 0 },
+  bat: { hp: 4, atk: 2, def: 0 },
   goblin: { hp: 10, atk: 3, def: 1 },
   ogre: { hp: 16, atk: 5, def: 2 },
+  wraith: { hp: 12, atk: 4, def: 1 },
 };
 
 function enemyPool(depth: number): EnemyKind[] {
-  if (depth <= 2) return ["slime", "goblin"];
-  if (depth <= 4) return ["slime", "goblin", "ogre"];
-  return ["goblin", "ogre"];
+  if (depth <= 2) return ["slime", "goblin", "bat"];
+  if (depth === 3) return ["slime", "goblin", "ogre", "bat"];
+  if (depth === 4) return ["goblin", "ogre", "bat", "wraith"];
+  return ["goblin", "ogre", "wraith"];
 }
 
 export function idx(width: number, p: Pos): number {

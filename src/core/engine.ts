@@ -2,14 +2,25 @@
 // 乱数状態は GameState.rng で持ち回り、同一入力 → 同一出力を保証する(F-01)。
 
 import { ENEMY_NAMES, enemyPhase } from "@/core/ai";
-import { MAX_DEPTH, generateFloor, idx, tileAt } from "@/core/dungeon";
+import { MAX_DEPTH, generateFloor, tileAt } from "@/core/dungeon";
 import { computeFov } from "@/core/fov";
 import { randInt, seedRng } from "@/core/rng";
-import type { Enemy, FloorMap, Item, Pos, RngState } from "@/core/types";
+import type { Enemy, EnemyKind, FloorMap, Item, Pos, RngState } from "@/core/types";
 
 export const FOV_RADIUS = 6;
 export const POTION_HEAL = 8;
 export const PLAYER_START = { maxHp: 24, atk: 4, def: 0 } as const;
+
+// スコア(F-12)— 撃破点の正本は SPEC.md の敵種テーブル
+export const SCORE_POINTS: Record<EnemyKind, number> = {
+  slime: 5,
+  bat: 7,
+  goblin: 10,
+  ogre: 25,
+  wraith: 30,
+};
+export const DESCEND_BONUS = 50;
+export const VICTORY_BONUS = 200;
 
 export type Action =
   | { type: "move"; dx: number; dy: number }
@@ -38,6 +49,8 @@ export interface GameState {
   player: Player;
   rng: RngState;
   turn: number;
+  score: number;
+  kills: number;
   status: GameStatus;
   messages: string[];
   visible: Set<number>;
@@ -63,6 +76,8 @@ export function initState(floor: FloorMap, seed: number, depth: number): GameSta
     },
     rng: seedRng(Math.imul(seed, 0x85ebca6b) ^ (depth * 977)),
     turn: 0,
+    score: 0,
+    kills: 0,
     status: "playing",
     messages: [`B${depth} に降り立った`],
     visible,
@@ -87,7 +102,9 @@ function descend(state: GameState): GameState {
     ...fresh,
     player: { ...state.player, pos: { ...floor.entry } },
     turn: state.turn + 1,
-    messages: [...state.messages, `階段を降りた — B${depth}`],
+    score: state.score + DESCEND_BONUS,
+    kills: state.kills,
+    messages: [...state.messages, `階段を降りた — B${depth}(+${DESCEND_BONUS})`],
   };
 }
 
@@ -144,11 +161,14 @@ function playerPhase(state: GameState, action: Action): PlayerPhase {
     const hp = foe.hp - dmg;
     const name = ENEMY_NAMES[foe.kind];
     if (hp <= 0) {
+      const points = SCORE_POINTS[foe.kind];
       return {
         state: {
-          ...withMessage(state, `${name}を倒した`),
+          ...withMessage(state, `${name}を倒した(+${points})`),
           rng,
           enemies: state.enemies.filter((e) => e.id !== foe.id),
+          score: state.score + points,
+          kills: state.kills + 1,
         },
         turnConsumed: true,
       };
@@ -176,8 +196,12 @@ function playerPhase(state: GameState, action: Action): PlayerPhase {
     } else if (item.kind === "shield") {
       next = { ...withMessage(next, "盾を手に入れた(def+1)"), player: { ...np, def: np.def + 1 } };
     } else {
-      // 魂珠(F-09)— 取得した瞬間に勝利
-      next = { ...withMessage(next, "魂珠を手に入れた — 勝利!"), status: "victory" };
+      // 魂珠(F-09)— 取得した瞬間に勝利(F-12: +200)
+      next = {
+        ...withMessage(next, `魂珠を手に入れた — 勝利!(+${VICTORY_BONUS})`),
+        status: "victory",
+        score: next.score + VICTORY_BONUS,
+      };
     }
   }
   return { state: next, turnConsumed: true };

@@ -6,14 +6,50 @@ import type { Enemy, FloorMap, Pos, RngState } from "@/core/types";
 
 export const ENEMY_NAMES: Record<Enemy["kind"], string> = {
   slime: "スライム",
+  bat: "こうもり",
   goblin: "ゴブリン",
   ogre: "オーガ",
+  wraith: "レイス",
 };
 
 const ALERT_RANGE = 8; // マンハッタン距離(F-06)
 
 function manhattan(a: Pos, b: Pos): number {
   return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
+}
+
+/** プレイヤーへ向かう貪欲一歩(F-06)。動けたら true。occupied を更新する */
+function greedyStep(floor: FloorMap, e: Enemy, playerPos: Pos, occupied: Set<number>): boolean {
+  const dx = Math.sign(playerPos.x - e.pos.x);
+  const dy = Math.sign(playerPos.y - e.pos.y);
+  const preferX = Math.abs(playerPos.x - e.pos.x) >= Math.abs(playerPos.y - e.pos.y);
+  const candidates: Pos[] = (
+    preferX
+      ? [
+          { x: dx, y: 0 },
+          { x: 0, y: dy },
+        ]
+      : [
+          { x: 0, y: dy },
+          { x: dx, y: 0 },
+        ]
+  ).filter((d) => d.x !== 0 || d.y !== 0);
+  // プレイヤーと軸整列している場合、直進が塞がれたら垂直 2 方向で回り込む(T-042)
+  if (dy === 0) candidates.push({ x: 0, y: 1 }, { x: 0, y: -1 });
+  if (dx === 0) candidates.push({ x: 1, y: 0 }, { x: -1, y: 0 });
+
+  for (const d of candidates) {
+    const n = { x: e.pos.x + d.x, y: e.pos.y + d.y };
+    const key = idx(floor.width, n);
+    if (tileAt(floor, n) !== "floor") continue;
+    if (occupied.has(key)) continue;
+    if (n.x === playerPos.x && n.y === playerPos.y) continue;
+    occupied.delete(idx(floor.width, e.pos));
+    e.pos = n;
+    occupied.add(key);
+    return true;
+  }
+  return false;
 }
 
 export interface EnemyPhaseResult {
@@ -42,48 +78,29 @@ export function enemyPhase(
   const occupied = new Set<number>(next.map((e) => idx(floor.width, e.pos)));
 
   for (const e of next) {
-    if (!e.alert && manhattan(e.pos, playerPos) <= ALERT_RANGE && hasLos(floor, e.pos, playerPos)) {
+    // レイスは気配で感知する(F-11: LOS 不要)。他種は LOS が必要
+    if (
+      !e.alert &&
+      manhattan(e.pos, playerPos) <= ALERT_RANGE &&
+      (e.kind === "wraith" || hasLos(floor, e.pos, playerPos))
+    ) {
       e.alert = true;
     }
     if (!e.alert || hp <= 0) continue;
 
-    if (manhattan(e.pos, playerPos) === 1) {
-      let bonus: number;
-      [bonus, s] = randInt(s, 0, 1);
-      const dmg = Math.max(1, e.atk - playerDef) + bonus;
-      hp -= dmg;
-      messages.push(`${ENEMY_NAMES[e.kind]}から ${dmg} のダメージを受けた`);
-      continue;
-    }
-
-    const dx = Math.sign(playerPos.x - e.pos.x);
-    const dy = Math.sign(playerPos.y - e.pos.y);
-    const preferX = Math.abs(playerPos.x - e.pos.x) >= Math.abs(playerPos.y - e.pos.y);
-    const candidates: Pos[] = (
-      preferX
-        ? [
-            { x: dx, y: 0 },
-            { x: 0, y: dy },
-          ]
-        : [
-            { x: 0, y: dy },
-            { x: dx, y: 0 },
-          ]
-    ).filter((d) => d.x !== 0 || d.y !== 0);
-    // プレイヤーと軸整列している場合、直進が塞がれたら垂直 2 方向で回り込む(T-042)
-    if (dy === 0) candidates.push({ x: 0, y: 1 }, { x: 0, y: -1 });
-    if (dx === 0) candidates.push({ x: 1, y: 0 }, { x: -1, y: 0 });
-
-    for (const d of candidates) {
-      const n = { x: e.pos.x + d.x, y: e.pos.y + d.y };
-      const key = idx(floor.width, n);
-      if (tileAt(floor, n) !== "floor") continue;
-      if (occupied.has(key)) continue;
-      if (n.x === playerPos.x && n.y === playerPos.y) continue;
-      occupied.delete(idx(floor.width, e.pos));
-      e.pos = n;
-      occupied.add(key);
-      break;
+    // こうもりは 1 ターンに最大 2 歩(F-11)。攻撃したらそのターンは終了
+    const steps = e.kind === "bat" ? 2 : 1;
+    for (let n = 0; n < steps; n++) {
+      if (manhattan(e.pos, playerPos) === 1) {
+        let bonus: number;
+        [bonus, s] = randInt(s, 0, 1);
+        const dmg = Math.max(1, e.atk - playerDef) + bonus;
+        hp -= dmg;
+        messages.push(`${ENEMY_NAMES[e.kind]}から ${dmg} のダメージを受けた`);
+        break;
+      }
+      const moved = greedyStep(floor, e, playerPos, occupied);
+      if (!moved) break;
     }
   }
 

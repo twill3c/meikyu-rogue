@@ -24,7 +24,7 @@ export interface Item {
   pos: Pos;
 }
 
-export type EnemyKind = "slime" | "goblin" | "ogre";
+export type EnemyKind = "slime" | "bat" | "goblin" | "ogre" | "wraith";
 
 export interface Enemy {
   id: number;
