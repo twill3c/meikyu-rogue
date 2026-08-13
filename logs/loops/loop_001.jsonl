@@ -9,3 +9,6 @@
 {"v": "1.2", "ts": "2026-08-13T08:13:30+09:00", "project": "meikyu-rogue", "loop_id": "loop_001", "event": "test_run", "data": {"command": "npm run verify:fast", "passed": 16, "failed": 0}}
 {"v": "1.2", "ts": "2026-08-13T08:13:30+09:00", "project": "meikyu-rogue", "loop_id": "loop_001", "event": "stage_end", "data": {"stage": 5, "stage_name": "検証", "result": "pass"}}
 {"v": "1.2", "ts": "2026-08-13T08:13:30+09:00", "project": "meikyu-rogue", "loop_id": "loop_001", "event": "stage_end", "data": {"stage": 6, "stage_name": "文書同期", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T08:13:45+09:00", "project": "meikyu-rogue", "loop_id": "loop_001", "event": "commit", "data": {"sha": "cf64152", "kind": "feat"}}
+{"v": "1.2", "ts": "2026-08-13T08:13:45+09:00", "project": "meikyu-rogue", "loop_id": "loop_001", "event": "stage_end", "data": {"stage": 7, "stage_name": "完了", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T08:13:46+09:00", "project": "meikyu-rogue", "loop_id": "loop_001", "event": "loop_end", "data": {"outcome": "success", "failure_count": 1, "summary": "F-01/F-02/F-03 完了。16 テスト green、verify:fast PASS。失敗 1 件(TOOL-ENV: app ディレクトリ不在で lint 起動不能 → プレースホルダで解消)"}}
