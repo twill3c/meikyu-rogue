@@ -129,7 +129,7 @@ describe("T-081 降下スコア", () => {
 });
 
 describe("T-082 勝利スコア", () => {
-  it("魂珠取得で +200 と victory", () => {
+  it("暁の勾玉取得で +200 と victory", () => {
     const f = openFloor();
     f.items = [{ kind: "amulet", pos: { x: 2, y: 1 } }];
     const s = initState(f, 1, 1);

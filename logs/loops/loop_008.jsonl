@@ -1,0 +1,7 @@
+{"v": "1.2", "ts": "2026-08-13T10:11:24+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "loop_start", "data": {"goal": "秘宝の名称を『魂珠』から『暁の勾玉』へ変更(表示文言のみ、内部名 amulet は据え置き)", "spec_refs": ["F-09", "F-12"], "scaffold_version": "1.8.0", "agent": "claude-fable-5"}}
+{"v": "1.2", "ts": "2026-08-13T10:11:24+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "stage_end", "data": {"stage": 1, "stage_name": "計画", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T10:11:25+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "stage_end", "data": {"stage": 2, "stage_name": "文脈読込", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T10:11:25+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "stage_end", "data": {"stage": 3, "stage_name": "テスト先行", "result": "skip", "notes": "文言のみの変更。既存テストは文言に依存せず(grep で確認済み)、挙動の変化なし"}}
+{"v": "1.2", "ts": "2026-08-13T10:14:09+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "test_run", "data": {"command": "npm run verify", "passed": 96, "failed": 0}}
+{"v": "1.2", "ts": "2026-08-13T10:14:09+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "stage_end", "data": {"stage": 4, "stage_name": "実装", "result": "pass"}}
+{"v": "1.2", "ts": "2026-08-13T10:14:10+09:00", "project": "meikyu-rogue", "loop_id": "loop_008", "event": "commit", "data": {"sha": "d3e2a00", "kind": "spec"}}

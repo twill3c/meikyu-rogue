@@ -83,9 +83,9 @@ describe("T-060/T-061 階段", () => {
   });
 });
 
-// T-062: 魂珠で勝利
+// T-062: 暁の勾玉で勝利
 describe("T-062 勝利", () => {
-  it("魂珠のマスへ移動すると status=victory", () => {
+  it("暁の勾玉のマスへ移動すると status=victory", () => {
     const f = openFloor();
     f.items = [{ kind: "amulet", pos: { x: 2, y: 1 } }];
     const s2 = step(stateOn(f), { type: "move", dx: 1, dy: 0 });

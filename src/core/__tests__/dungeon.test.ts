@@ -90,7 +90,7 @@ describe("T-013 到達可能性", () => {
       expect(reach.has(e.pos.y * f.width + e.pos.x)).toBe(true);
     }
   });
-  it("B5 は階段の代わりに魂珠を持つ", () => {
+  it("B5 は階段の代わりに暁の勾玉を持つ", () => {
     const f = generateFloor(77, MAX_DEPTH);
     expect(f.stairs).toBeNull();
     expect(f.items.filter((i) => i.kind === "amulet")).toHaveLength(1);

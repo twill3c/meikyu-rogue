@@ -196,9 +196,9 @@ function playerPhase(state: GameState, action: Action): PlayerPhase {
     } else if (item.kind === "shield") {
       next = { ...withMessage(next, "盾を手に入れた(def+1)"), player: { ...np, def: np.def + 1 } };
     } else {
-      // 魂珠(F-09)— 取得した瞬間に勝利(F-12: +200)
+      // 暁の勾玉(F-09)— 取得した瞬間に勝利(F-12: +200)
       next = {
-        ...withMessage(next, `魂珠を手に入れた — 勝利!(+${VICTORY_BONUS})`),
+        ...withMessage(next, `暁の勾玉を手に入れた — 勝利!(+${VICTORY_BONUS})`),
         status: "victory",
         score: next.score + VICTORY_BONUS,
       };

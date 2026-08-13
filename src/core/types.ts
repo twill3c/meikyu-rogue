@@ -46,7 +46,7 @@ export interface FloorMap {
   rooms: Rect[];
   /** プレイヤーの入口(前の階の階段直下) */
   entry: Pos;
-  /** 下り階段。B5(最下層)は null で、代わりに魂珠アイテムが置かれる */
+  /** 下り階段。B5(最下層)は null で、代わりに暁の勾玉アイテムが置かれる */
   stairs: Pos | null;
   items: Item[];
   enemies: Enemy[];

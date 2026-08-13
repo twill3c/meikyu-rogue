@@ -274,7 +274,7 @@ export default function Home() {
             }}
           >
             <div style={{ fontSize: 24, color: game.status === "victory" ? COLORS.stairs : COLORS.enemy }}>
-              {game.status === "victory" ? "魂珠を持ち帰った — 勝利!" : "力尽きた…"}
+              {game.status === "victory" ? "暁の勾玉を持ち帰った — 勝利!" : "力尽きた…"}
             </div>
             <div style={{ fontSize: 16 }}>
               最終スコア {game.score}(撃破 {game.kills} 体 ・ B{game.depth} 到達)
@@ -318,7 +318,7 @@ export default function Home() {
 
       <footer style={{ fontSize: 12, opacity: 0.55, maxWidth: 640, textAlign: "center" }}>
         移動: 矢印 / hjkl / wasd(敵に向かうと攻撃) ・ 待機: .(階段上では降りる) ・
-        q: 回復薬 ・ m: 効果音 ON/OFF ・ r: 新しいシードで再挑戦 — B5 の魂珠 * を取れば勝利
+        q: 回復薬 ・ m: 効果音 ON/OFF ・ r: 新しいシードで再挑戦 — B5 の暁の勾玉 * を取れば勝利
       </footer>
     </main>
   );
