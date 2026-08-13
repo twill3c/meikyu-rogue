@@ -4,6 +4,7 @@
 最下層 B5 の秘宝「暁の勾玉」を持ち帰れば勝利。
 
 **▶ プレイ: https://meikyu-rogue.vercel.app** ・ リポジトリ: https://github.com/twill3c/meikyu-rogue
+・ [遊び方ガイド(図解)](https://claude.ai/code/artifact/cc33a7fa-c27a-4261-abb9-a8c0043cec99)
 
 - **決定的**: 同一シードなら同一の迷宮・同一のリプレイ(乱数は GameState 内で持ち回り)
 - **検証済み生成**: すべての階は「入口から階段・全アイテム・全敵へ到達可能」を

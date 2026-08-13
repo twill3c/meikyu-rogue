@@ -330,6 +330,15 @@ export default function Home() {
             style={{ color: "inherit" }}
           >
             GitHub
+          </a>{" "}
+          ・{" "}
+          <a
+            href="https://claude.ai/code/artifact/cc33a7fa-c27a-4261-abb9-a8c0043cec99"
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: "inherit" }}
+          >
+            遊び方ガイド
           </a>
         </div>
       </footer>
